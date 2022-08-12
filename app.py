@@ -1,10 +1,13 @@
 import uvicorn
 from fastapi import FastAPI
 
+from source.api.recipes import router as recipes_router
+
 from source.db import database, engine, metadata
 from source.settings import settings
 
 app = FastAPI()
+app.include_router(recipes_router)
 
 
 @app.on_event("startup")

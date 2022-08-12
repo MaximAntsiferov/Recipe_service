@@ -28,7 +28,7 @@ recipe = sa.Table(
     sa.Column("description", sa.String),
     sa.Column("cooking_steps", sa.String),
     sa.Column("photo", sa.String),
-    sa.Column("likes", sa.Integer, nullable=True),
+    sa.Column("likes", sa.Integer, default=0),
     sa.Column("status", sa.String(50)),
 )
 
