@@ -1,12 +1,16 @@
 import uvicorn
 from fastapi import FastAPI
 
+from source.api.auth import router as auth_router
+from source.api.user import router as user_router
 from source.api.recipes import router as recipes_router
 
 from source.db import database, engine, metadata
 from source.settings import settings
 
 app = FastAPI()
+app.include_router(auth_router)
+app.include_router(user_router)
 app.include_router(recipes_router)
 
 

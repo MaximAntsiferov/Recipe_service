@@ -28,7 +28,7 @@ class Recipe(BaseModel):
     cooking_steps: str
     photo: str
     likes: int
-    status: RecipeStatus
+    status: RecipeStatus = "Активен"
 
     class Config:
         orm_mode = True

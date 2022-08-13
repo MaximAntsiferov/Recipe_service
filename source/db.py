@@ -6,21 +6,22 @@ from source.settings import settings
 database = databases.Database(settings.database_url)
 metadata = sa.MetaData()
 
-user = sa.Table(
-    "user",
+users = sa.Table(
+    "users",
     metadata,
-    sa.Column("id", sa.Integer, primary_key=True),
-    sa.Column("nickname", sa.String(50), unique=True),
+    sa.Column("id", sa.Integer, primary_key=True, autoincrement=True),
+    sa.Column("username", sa.String(50), unique=True),
     sa.Column("status", sa.String(50)),
     sa.Column("created_at", sa.Date),
     sa.Column("updated_at", sa.Date),
+    sa.Column("hashed_password", sa.String()),
 )
 
-recipe = sa.Table(
-    "recipe",
+recipes = sa.Table(
+    "recipes",
     metadata,
     sa.Column("id", sa.Integer, primary_key=True),
-    sa.Column("author", sa.Integer, sa.ForeignKey('user.id')),
+    sa.Column("author", sa.Integer, sa.ForeignKey('users.id')),
     sa.Column("created_at", sa.Date),
     sa.Column("updated_at", sa.Date),
     sa.Column("name", sa.String(50)),
@@ -32,17 +33,17 @@ recipe = sa.Table(
     sa.Column("status", sa.String(50)),
 )
 
-favorite = sa.Table(
-    "favorite",
+favorites = sa.Table(
+    "favorites",
     metadata,
-    sa.Column("user_id", sa.Integer, sa.ForeignKey('user.id')),
-    sa.Column("recipe_id", sa.Integer, sa.ForeignKey('recipe.id')),
+    sa.Column("user_id", sa.Integer, sa.ForeignKey('users.id')),
+    sa.Column("recipe_id", sa.Integer, sa.ForeignKey('recipes.id')),
 )
 
-hashtag = sa.Table(
-    "hashtag",
+hashtags = sa.Table(
+    "hashtags",
     metadata,
-    sa.Column("recipe_id", sa.Integer, sa.ForeignKey('recipe.id')),
+    sa.Column("recipe_id", sa.Integer, sa.ForeignKey('recipes.id')),
     sa.Column("hashtag", sa.String(50)),
 )
 
