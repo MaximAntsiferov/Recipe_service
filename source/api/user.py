@@ -1,10 +1,12 @@
+from datetime import datetime
 from typing import List, Optional
-from fastapi import APIRouter
-from sqlalchemy import select, desc, text
+from fastapi import status, APIRouter, Depends, Response
+from sqlalchemy import select, desc, text, and_
 from sqlalchemy.sql.functions import count
 
 from source.db import database, users, recipes
-from source.models.user import User, UserStatus
+from source.models.user import User, UserStatus, BaseUser, UserUpdate
+from source.services.auth import get_current_active_user
 
 router = APIRouter(prefix="/users")
 
@@ -33,5 +35,22 @@ async def get_top10_users():
     top10_users = await database.fetch_all(users_and_recipes)
     return top10_users
 
+
+@router.put('/{user_id}', response_model=User)
+async def update_user(user_id: int, user_data: UserUpdate, user: BaseUser = Depends(get_current_active_user)):
+    now = datetime.utcnow()
+    user_data.dict()['update_at'] = now
+    query = users.update().where(and_(users.c.id == user.id, users.c.id == user_id)).values(**user_data.dict())
+    await database.execute(query)
+    get_updated_user = users.select().where(and_(users.c.id == user.id, users.c.id == user_id))
+    updated_user = await database.fetch_one(get_updated_user)
+    return updated_user
+
+
+@router.delete('/{user_id}', status_code=status.HTTP_204_NO_CONTENT)
+async def delete_recipe(user_id: int, user: BaseUser = Depends(get_current_active_user)):
+    query = users.delete().where(and_(users.c.id == user_id, users.c.id == user.id))
+    await database.execute(query)
+    return Response(status_code=status.HTTP_204_NO_CONTENT)
 
 

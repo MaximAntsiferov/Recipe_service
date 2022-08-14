@@ -27,7 +27,7 @@ class Recipe(BaseModel):
     name: str
     kind: RecipeKind
     description: str
-    cooking_steps: str
+    cooking_steps: Optional[str] = None
     photo: str
     likes: int = 0
     status: RecipeStatus = "Активен"
