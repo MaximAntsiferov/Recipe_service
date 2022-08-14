@@ -3,7 +3,7 @@ from fastapi import APIRouter, Depends, HTTPException, status
 from fastapi.security import OAuth2PasswordRequestForm
 from source.db import users, database
 from source.models.token import Token
-from source.models.user import UserCreate, User, BaseUser
+from source.models.user import UserCreate, BaseUser
 from source.services.auth import get_password_hash, create_access_token, authenticate_user, get_current_active_user
 
 router = APIRouter(prefix="/auth")
@@ -23,7 +23,8 @@ async def sign_up(user_data: UserCreate):
     query = users.insert().values(**values)
     await database.execute(query)
     access_token = create_access_token(data={'sub': user.username})
-    return {"access_token": access_token, "token_type": "bearer"}
+    token = {"access_token": access_token, "token_type": "bearer"}
+    return token
 
 
 @router.post("/sign-in", response_model=Token)
@@ -36,9 +37,10 @@ async def sign_in(form_data: OAuth2PasswordRequestForm = Depends()):
             headers={"WWW-Authenticate": "Bearer"},
         )
     access_token = create_access_token(data={"sub": user.username})
-    return {"access_token": access_token, "token_type": "bearer"}
+    token = {"access_token": access_token, "token_type": "bearer"}
+    return token
 
 
 @router.get("/profile", response_model=BaseUser)
-async def read_users_me(current_user: User = Depends(get_current_active_user)):
+async def read_users_me(current_user: BaseUser = Depends(get_current_active_user)):
     return current_user

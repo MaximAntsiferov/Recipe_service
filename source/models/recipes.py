@@ -1,5 +1,7 @@
 from datetime import date
 from enum import Enum
+from typing import Optional
+
 from pydantic import BaseModel
 
 
@@ -18,7 +20,7 @@ class RecipeStatus(str, Enum):
 
 
 class Recipe(BaseModel):
-    id: int
+    id: Optional[int] = None
     author: int
     created_at: date
     updated_at: date
@@ -27,9 +29,23 @@ class Recipe(BaseModel):
     description: str
     cooking_steps: str
     photo: str
-    likes: int
+    likes: int = 0
     status: RecipeStatus = "Активен"
 
     class Config:
         orm_mode = True
 
+
+class RecipeCreate(BaseModel):
+    name: str
+    kind: RecipeKind
+    description: str
+    cooking_steps: str
+    photo: str
+
+    class Config:
+        orm_mode = True
+
+
+class RecipeUpdate(RecipeCreate):
+    pass
