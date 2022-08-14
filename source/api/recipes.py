@@ -12,19 +12,19 @@ router = APIRouter(prefix="/recipes")
 
 
 @router.get("/", response_model=List[Recipe])
-async def get_recipes(kind: Optional[RecipeKind] = None, status: Optional[RecipeStatus] = None):
+async def get_recipes(kind: Optional[RecipeKind] = None, recipe_status: Optional[RecipeStatus] = None, user: BaseUser = Depends(get_current_active_user)):
     query = recipes.select()
     if kind:
         query = query.filter_by(kind=kind)
-    if status:
-        query = query.filter_by(status=status)
+    if recipe_status:
+        query = query.filter_by(recipe_status=recipe_status)
     recipes_list = await database.fetch_all(query)
     return recipes_list
 
 
-@router.get("/{id}", response_model=Recipe)
-async def get_recipe(id: int):
-    query = recipes.select().where(recipes.c.id == id)
+@router.get("/{recipe_id}", response_model=Recipe)
+async def get_recipe(recipe_id: int, user: BaseUser = Depends(get_current_active_user)):
+    query = recipes.select().where(recipes.c.id == recipe_id)
     return await database.fetch_one(query)
 
 
@@ -69,12 +69,3 @@ async def delete_recipe(recipe_id: int, user: BaseUser = Depends(get_current_act
     return Response(status_code=status.HTTP_204_NO_CONTENT)
 
 
-@router.get("/", response_model=List[Recipe])
-async def get_recipes(kind: Optional[RecipeKind] = None, status: Optional[RecipeStatus] = None):
-    query = recipes.select()
-    if kind:
-        query = query.filter_by(kind=kind)
-    if status:
-        query = query.filter_by(status=status)
-    recipes_list = await database.fetch_all(query)
-    return recipes_list

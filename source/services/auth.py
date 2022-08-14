@@ -66,6 +66,6 @@ async def get_current_user(token: str = Depends(oauth2_scheme)):
 
 
 async def get_current_active_user(current_user: BaseUser = Depends(get_current_user)):
-    if current_user.status == "Заблокирован":
+    if current_user.user_status == "Заблокирован":
         raise HTTPException(status_code=400, detail="User has been blocked")
     return current_user

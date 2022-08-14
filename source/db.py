@@ -12,7 +12,7 @@ users = sa.Table(
     metadata,
     sa.Column("id", sa.Integer, primary_key=True, autoincrement=True),
     sa.Column("username", sa.String(50), unique=True),
-    sa.Column("status", sa.String(50)),
+    sa.Column("user_status", sa.String(50)),
     sa.Column("created_at", sa.Date),
     sa.Column("updated_at", sa.Date),
     sa.Column("hashed_password", sa.String),
@@ -32,7 +32,7 @@ recipes = sa.Table(
     sa.Column("cooking_steps", sa.String),
     sa.Column("photo", sa.String),
     sa.Column("likes", sa.Integer),
-    sa.Column("status", sa.String(50)),
+    sa.Column("recipe_status", sa.String(50)),
 )
 
 favorites = sa.Table(

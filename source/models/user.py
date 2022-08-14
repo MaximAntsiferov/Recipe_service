@@ -12,7 +12,7 @@ class UserStatus(str, Enum):
 class BaseUser(BaseModel):
     id: Optional[int] = None
     username: str
-    status: UserStatus = "Активен"
+    user_status: UserStatus = "Активен"
     created_at: date
     updated_at: date
     hashed_password: str
@@ -25,7 +25,7 @@ class BaseUser(BaseModel):
 class User(BaseModel):
     id: Optional[int] = None
     username: str
-    status: UserStatus = "Активен"
+    user_status: UserStatus = "Активен"
     recipes_quantity: int = 0
 
     class Config:

@@ -4,7 +4,8 @@ from fastapi.security import OAuth2PasswordRequestForm
 from source.db import users, database
 from source.models.token import Token
 from source.models.user import UserCreate, BaseUser
-from source.services.auth import get_password_hash, create_access_token, authenticate_user, get_current_active_user
+from source.services.auth import get_password_hash, create_access_token, authenticate_user, get_current_active_user, \
+    get_current_user
 
 router = APIRouter(prefix="/auth")
 
@@ -42,5 +43,5 @@ async def sign_in(form_data: OAuth2PasswordRequestForm = Depends()):
 
 
 @router.get("/profile", response_model=BaseUser)
-async def read_users_me(current_user: BaseUser = Depends(get_current_active_user)):
+async def read_users_me(current_user: BaseUser = Depends(get_current_user)):
     return current_user
