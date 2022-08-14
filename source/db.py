@@ -1,5 +1,6 @@
 import sqlalchemy as sa
 import databases
+
 from source.settings import settings
 
 
@@ -14,7 +15,8 @@ users = sa.Table(
     sa.Column("status", sa.String(50)),
     sa.Column("created_at", sa.Date),
     sa.Column("updated_at", sa.Date),
-    sa.Column("hashed_password", sa.String()),
+    sa.Column("hashed_password", sa.String),
+    sa.Column("recipes_quantity", sa.Integer),
 )
 
 recipes = sa.Table(
@@ -47,4 +49,5 @@ hashtags = sa.Table(
     sa.Column("hashtag", sa.String(50)),
 )
 
-engine = sa.create_engine(settings.database_url)
+
+engine = sa.create_engine(settings.database_url, echo=True)

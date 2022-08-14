@@ -9,13 +9,24 @@ class UserStatus(str, Enum):
     blocked = "Заблокирован"
 
 
-class User(BaseModel):
+class BaseUser(BaseModel):
     id: Optional[int] = None
     username: str
     status: UserStatus = "Активен"
     created_at: date
     updated_at: date
     hashed_password: str
+    recipes_quantity: int = 0
+
+    class Config:
+        orm_mode = True
+
+
+class User(BaseModel):
+    id: Optional[int] = None
+    username: str
+    status: UserStatus = "Активен"
+    recipes_quantity: int = 0
 
     class Config:
         orm_mode = True
