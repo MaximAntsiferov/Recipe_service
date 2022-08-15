@@ -25,19 +25,14 @@
 - sudo apt install postgresql postgresql-client
 - sudo -i -u postgres
 - createdb bd
-<br>
-
-<br>
 - sudo apt install git
 - git clone https://github.com/MaximAntsiferov/Recipe_service
-<br>
 - cd Recipe_service/
 - python3 -m venv .venv
 - source .venv/bin/activate
 - pip install requirements.txt
-
-<br>
+<br><br>
 - переименовываем .env.example в .env 
 - вписываем данные сервера и БД
-<br>
+# Запуск
 - python app.py
