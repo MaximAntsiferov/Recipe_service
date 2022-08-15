@@ -26,7 +26,7 @@
 - sudo -i -u postgres
 - createdb bd
 <br>
-- Ctrl + D
+
 <br>
 - sudo apt install git
 - git clone https://github.com/MaximAntsiferov/Recipe_service
