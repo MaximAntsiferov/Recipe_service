@@ -12,8 +12,16 @@
 - sudo apt update
 - sudo apt upgrade
 - sudo apt install postgresql postgresql-client
-- sudo –i –u postgres
-- created bd
-- psql
+- sudo -i -u postgres
+- createdb bd
+
+Ctrl + D
+
 - sudo apt install git
-- git clone
+- git clone https://github.com/MaximAntsiferov/Recipe_service
+
+- sudo apt install python3.8-venv
+- cd Recipe_service/
+- python3 -m venv .venv
+- source .venv/bin/activate
+- pip install requirements.txt
