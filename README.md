@@ -1,27 +1,43 @@
 # Recipe_service
 Сервис для публикации пользовательских рецептов<br>
 <br>
-Написан на языке Python 3.8.1<br>
-База данных PosgreSQL<br>
-Система Ubuntu 20.04<br>
-<br>
+Написан на языке Python 3.10.2<br>
+База данных PosgreSQL
+<br><br>
 
-Список необходимых библиотек в файле requirements.txt
-
-# Инструкция по установке на сервер
+# Список используемых библиотек<br>
+- fastapi
+- pydantic
+- uvicorn
+- python-dotenv
+- sqlalchemy
+- databases
+- asyncpg
+- psycopg2
+- python-jose
+- passlib
+- bcrypt
+- python-multipart
+<br><br>
+# Инструкция по установке на сервер<br>
 - sudo apt update
 - sudo apt upgrade
 - sudo apt install postgresql postgresql-client
 - sudo -i -u postgres
 - createdb bd
-
-Ctrl + D
-
+<br>
+- Ctrl + D
+<br>
 - sudo apt install git
 - git clone https://github.com/MaximAntsiferov/Recipe_service
-
-- sudo apt install python3.8-venv
+<br>
 - cd Recipe_service/
 - python3 -m venv .venv
 - source .venv/bin/activate
 - pip install requirements.txt
+
+<br>
+- переименовываем .env.example в .env 
+- вписываем данные сервера и БД
+<br>
+- python app.py
