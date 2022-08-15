@@ -37,5 +37,5 @@ class UserCreate(BaseModel):
     password: str
 
 
-class UserUpdate(UserCreate):
-    pass
+class UserUpdate(BaseModel):
+    username: str

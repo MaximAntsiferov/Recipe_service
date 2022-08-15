@@ -4,14 +4,16 @@ from fastapi.security import OAuth2PasswordRequestForm
 from source.db import users, database
 from source.models.token import Token
 from source.models.user import UserCreate, BaseUser
-from source.services.auth import get_password_hash, create_access_token, authenticate_user, get_current_active_user, \
-    get_current_user
+from source.services.auth import get_password_hash, create_access_token, authenticate_user, get_current_user
 
-router = APIRouter(prefix="/auth")
+router = APIRouter(prefix="/auth", tags=["Auth"])
 
 
 @router.post("/sign-up", response_model=Token, status_code=status.HTTP_201_CREATED)
 async def sign_up(user_data: UserCreate):
+    """
+    Регистрация нового пользователя
+    """
     now = datetime.utcnow()
     user = BaseUser(
         created_at=now,
@@ -30,6 +32,9 @@ async def sign_up(user_data: UserCreate):
 
 @router.post("/sign-in", response_model=Token)
 async def sign_in(form_data: OAuth2PasswordRequestForm = Depends()):
+    """
+    Авторизация
+    """
     user = await authenticate_user(form_data.username, form_data.password)
     if not user:
         raise HTTPException(
@@ -43,5 +48,8 @@ async def sign_in(form_data: OAuth2PasswordRequestForm = Depends()):
 
 
 @router.get("/profile", response_model=BaseUser)
-async def read_users_me(current_user: BaseUser = Depends(get_current_user)):
+async def profile(current_user: BaseUser = Depends(get_current_user)):
+    """
+    Вход в профиль пользователя
+    """
     return current_user

@@ -24,7 +24,7 @@ class Recipe(BaseModel):
     author: int
     created_at: date
     updated_at: date
-    name: str
+    title: str
     kind: RecipeKind
     description: str
     cooking_steps: Optional[str] = None
@@ -37,7 +37,7 @@ class Recipe(BaseModel):
 
 
 class RecipeCreate(BaseModel):
-    name: str
+    title: str
     kind: RecipeKind
     description: str
     cooking_steps: str

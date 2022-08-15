@@ -26,7 +26,7 @@ recipes = sa.Table(
     sa.Column("author", sa.Integer, sa.ForeignKey('users.id')),
     sa.Column("created_at", sa.Date),
     sa.Column("updated_at", sa.Date),
-    sa.Column("name", sa.String(50)),
+    sa.Column("title", sa.String(50)),
     sa.Column("kind", sa.String(50)),
     sa.Column("description", sa.String),
     sa.Column("cooking_steps", sa.String),
